@@ -39,7 +39,7 @@ export default function Home({ countries }) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const res = await fetch("https://restcountries.eu/rest/v2/all");
   const countries = await res.json();
 

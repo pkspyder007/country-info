@@ -95,15 +95,18 @@ const Country = ({ country }) => {
               </div>
 
               <div className={styles.details_panel_borders_container}>
-                {borders.map(({ flag, name }) => (
-                  <div className={styles.details_panel_borders_country}>
-                    <img src={flag} alt={name}></img>
-
-                    <div className={styles.details_panel_borders_name}>
-                      {name}
+                {borders.map(({ flag, name }) => {
+                  // if(name === "Pakistan") return;
+                  return (
+                    <div key={name} className={styles.details_panel_borders_country}>
+                      <img src={flag} alt={name}></img>
+  
+                      <div className={styles.details_panel_borders_name}>
+                        {name}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -115,23 +118,24 @@ const Country = ({ country }) => {
 
 export default Country;
 
-export const getStaticPaths = async () => {
-  const res = await fetch("https://restcountries.eu/rest/v2/all");
-  const countries = await res.json();
+// Thid for getting all paths for static side generation (with getStaticProps)
+// export const getStaticPaths = async () => {
+//   const res = await fetch("https://restcountries.eu/rest/v2/all");
+//   const countries = await res.json();
 
-  const paths = countries.map((country) => ({
-    params: { id: country.alpha3Code },
-  }));
+//   const paths = countries.map((country) => ({
+//     params: { id: country.alpha3Code },
+//   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
-};
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// };
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const country = await getCountry(params.id);
-
+  console.log("Fetching country information on server side.")
   return {
     props: {
       country,
