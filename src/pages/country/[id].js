@@ -3,7 +3,8 @@ import Layout from "../../components/Layout/Layout";
 import styles from "./Country.module.css";
 
 const getCountry = async (id) => {
-  const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${id}`);
+  const { NEXT_PUBLIC_API_BASE_URL } = process.env;
+  const res = await fetch(`${NEXT_PUBLIC_API_BASE_URL}/alpha/${id}`);
 
   const country = await res.json();
 

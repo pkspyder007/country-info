@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useState } from "react";
 import CountriesTable from "../components/CountriesTable/CountriesTable";
 import Layout from "../components/Layout/Layout";
@@ -40,7 +39,8 @@ export default function Home({ countries }) {
 }
 
 export const getServerSideProps = async () => {
-  const res = await fetch("https://restcountries.eu/rest/v2/all");
+  const { API_BASE_URL } = process.env;
+  const res = await fetch(`${API_BASE_URL}/all`);
   const countries = await res.json();
 
   return {
